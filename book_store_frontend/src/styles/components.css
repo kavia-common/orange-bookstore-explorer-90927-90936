@@ -1,0 +1,29 @@
+.main {
+  background: var(--gradient);
+}
+
+.main .inner {
+  padding-top: 1.25rem;
+  padding-bottom: 2rem;
+}
+
+.hero {
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero h1 {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+}
+
+.spacer {
+  height: 1rem;
+}
