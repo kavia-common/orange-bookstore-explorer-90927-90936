@@ -1,3 +1,6 @@
+// ---------------------- Imports (must be first) ----------------------
+import mockBooks from '../../data/mockBooks.json';
+
 //
 // API Service Layer with Adapter Pattern
 // Supports Mock, REST (placeholder), and GraphQL (placeholder) adapters.
@@ -62,8 +65,6 @@ function selectAdapter() {
  */
 
 // ---------------------- Mock Adapter ----------------------
-import mockBooks from '../../data/mockBooks.json';
-
 const MockAdapter = {
   /** Return all mock books. Simulate async latency. */
   async getBooks() {
