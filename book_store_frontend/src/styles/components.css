@@ -32,3 +32,16 @@
 .cart-backdrop {
   cursor: pointer;
 }
+
+/* Cart page responsive layout (stacked for mobile; 2 columns for wide screens) */
+@media (min-width: 980px) {
+  .cart-layout {
+    grid-template-columns: 1fr 320px !important;
+    align-items: start;
+  }
+}
+
+/* Cart item fine-tuning */
+.cart-item .btn {
+  padding: .4rem .75rem;
+}
