@@ -18,7 +18,7 @@ function App() {
    */
   const [theme, setTheme] = useState('light');
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartCount] = useState(0); // Placeholder count; wire to real cart later.
+  const [cartCount] = useState(0); // Placeholder; can be replaced with useCart().totals.count
 
   const navigate = useNavigate();
   const location = useLocation();
