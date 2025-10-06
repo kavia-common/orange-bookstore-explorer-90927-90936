@@ -2,22 +2,10 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import CartItem from '../components/CartItem.jsx';
+import { formatCurrency } from '../utils/format.js';
 
-/**
- * Format price utility (USD fallback).
- */
-function formatPrice(value) {
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(Number(value ?? 0));
-  } catch {
-    const n = Number(value ?? 0);
-    return `$${n.toFixed(2)}`;
-  }
-}
+// Shared formatter
+const formatPrice = (value) => formatCurrency(value, { currency: 'USD' });
 
 // PUBLIC_INTERFACE
 export default function CartPage() {

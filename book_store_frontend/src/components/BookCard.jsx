@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
+import { formatCurrency } from '../utils/format.js';
 
 // PUBLIC_INTERFACE
 export default function BookCard({ book, onAddedToCart }) {
@@ -23,19 +24,8 @@ export default function BookCard({ book, onAddedToCart }) {
   const { addItem } = useCart();
   const addBtnRef = useRef(null);
 
-  // Temporary local currency formatter until utils/format.js is added
-  const formatPrice = (value) => {
-    try {
-      return new Intl.NumberFormat(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-      }).format(Number(value ?? 0));
-    } catch {
-      const n = Number(value ?? 0);
-      return `$${n.toFixed(2)}`;
-    }
-  };
+  // Use shared currency formatter for consistency
+  const formatPrice = (value) => formatCurrency(value, { currency: 'USD' });
 
   const titleId = `book-title-${book.id}`;
   const imgAlt = `${book.title} cover`;

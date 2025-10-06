@@ -1,22 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useCart } from '../context/CartContext.jsx';
+import { formatCurrency } from '../utils/format.js';
 
-/**
- * Format price utility (USD fallback).
- */
-function formatPrice(value) {
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(Number(value ?? 0));
-  } catch {
-    const n = Number(value ?? 0);
-    return `$${n.toFixed(2)}`;
-  }
-}
+// Use shared formatter
+const formatPrice = (value) => formatCurrency(value, { currency: 'USD' });
 
 // PUBLIC_INTERFACE
 export default function CartItem({ item, 'aria-posinset': posinset, 'aria-setsize': setsize }) {

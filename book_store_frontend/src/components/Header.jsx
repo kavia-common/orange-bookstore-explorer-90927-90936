@@ -4,7 +4,8 @@
   */
  import { Link, NavLink } from 'react-router-dom';
  import { useFilters } from '../context/FilterContext.jsx';
- 
+ import logoUrl from '../assets/logo.svg';
+
  // PUBLIC_INTERFACE
  export default function Header({ onToggleTheme, theme, onOpenCart, cartCount = 0 }) {
    /** Renders the site header. */
@@ -18,13 +19,28 @@
    } catch {
      // no provider mounted yet; ignore to avoid runtime error in isolated renders/tests
    }
- 
+
+   // Determine if logo asset exists; if import fails in some envs, fallback to text brand.
+   const hasLogo = !!logoUrl;
+
    return (
      <header className="site-header">
        <div className="container inner">
          <Link to="/" className="brand" aria-label="Book Store Home">
-           <span className="brand-mark" aria-hidden="true" />
-           <span>Orange Bookstore</span>
+           {hasLogo ? (
+             <img
+               src={logoUrl}
+               alt="Orange Bookstore"
+               width="140"
+               height="32"
+               style={{ display: 'block', height: '32px', width: 'auto' }}
+             />
+           ) : (
+             <>
+               <span className="brand-mark" aria-hidden="true" />
+               <span>Orange Bookstore</span>
+             </>
+           )}
          </Link>
  
          {/* Center-aligned search input wired to FilterContext */}
