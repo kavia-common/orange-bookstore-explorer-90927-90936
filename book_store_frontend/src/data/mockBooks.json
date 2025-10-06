@@ -1,0 +1,134 @@
+[
+  {
+    "id": "1",
+    "title": "The Orange Odyssey",
+    "author": "Ava Thompson",
+    "genre": "Adventure",
+    "price": 14.99,
+    "rating": 4.4,
+    "popularity": 875,
+    "description": "A vibrant journey across sun-drenched coasts in search of a legendary grove.",
+    "cover": "/assets/covers/orange-odyssey.jpg"
+  },
+  {
+    "id": "2",
+    "title": "React for Pragmatists",
+    "author": "Liam Carter",
+    "genre": "Technology",
+    "price": 29.0,
+    "rating": 4.7,
+    "popularity": 1540,
+    "description": "Hands-on patterns for building resilient, modern React applications.",
+    "cover": "/assets/covers/react-pragmatists.jpg"
+  },
+  {
+    "id": "3",
+    "title": "Shadows of the Archipelago",
+    "author": "Maya Santos",
+    "genre": "Mystery",
+    "price": 18.5,
+    "rating": 4.2,
+    "popularity": 630,
+    "description": "An intricate mystery set across remote islands where every tide hides a clue.",
+    "cover": "/assets/covers/shadows-archipelago.jpg"
+  },
+  {
+    "id": "4",
+    "title": "Citrus & Steel",
+    "author": "Noah Bennett",
+    "genre": "Science Fiction",
+    "price": 21.99,
+    "rating": 4.5,
+    "popularity": 990,
+    "description": "Humanity adapts to solar megastructures where energy is harvested like orchards.",
+    "cover": "/assets/covers/citrus-steel.jpg"
+  },
+  {
+    "id": "5",
+    "title": "The Minimalist Kitchen",
+    "author": "Ella Kim",
+    "genre": "Cooking",
+    "price": 24.99,
+    "rating": 4.6,
+    "popularity": 720,
+    "description": "Simple techniques and recipes to maximize flavor with fewer ingredients.",
+    "cover": "/assets/covers/minimalist-kitchen.jpg"
+  },
+  {
+    "id": "6",
+    "title": "Whispers in Amber",
+    "author": "Owen Ruiz",
+    "genre": "Romance",
+    "price": 12.99,
+    "rating": 4.1,
+    "popularity": 455,
+    "description": "A tender story of love and loss set against autumn cityscapes.",
+    "cover": "/assets/covers/whispers-amber.jpg"
+  },
+  {
+    "id": "7",
+    "title": "Algorithms in Plain English",
+    "author": "Priya Desai",
+    "genre": "Technology",
+    "price": 27.5,
+    "rating": 4.8,
+    "popularity": 1880,
+    "description": "Demystifying fundamental algorithms with approachable explanations.",
+    "cover": "/assets/covers/algorithms-plain-english.jpg"
+  },
+  {
+    "id": "8",
+    "title": "Gardens of the Monsoon",
+    "author": "Ravi Patel",
+    "genre": "Travel",
+    "price": 16.99,
+    "rating": 4.0,
+    "popularity": 540,
+    "description": "A lush travelogue through rain-kissed landscapes and hidden trails.",
+    "cover": "/assets/covers/gardens-monsoon.jpg"
+  },
+  {
+    "id": "9",
+    "title": "Edge of Probability",
+    "author": "Zoe Chen",
+    "genre": "Thriller",
+    "price": 19.99,
+    "rating": 4.3,
+    "popularity": 1015,
+    "description": "A statistician uncovers a pattern that predicts disasters—until it predicts her own.",
+    "cover": "/assets/covers/edge-probability.jpg"
+  },
+  {
+    "id": "10",
+    "title": "Art of Quiet Leadership",
+    "author": "Marcus Hall",
+    "genre": "Business",
+    "price": 22.0,
+    "rating": 4.4,
+    "popularity": 860,
+    "description": "Guiding teams with clarity, empathy, and thoughtful decision-making.",
+    "cover": "/assets/covers/quiet-leadership.jpg"
+  },
+  {
+    "id": "11",
+    "title": "Patterns of the Tides",
+    "author": "Isla Romero",
+    "genre": "Literary Fiction",
+    "price": 15.49,
+    "rating": 4.2,
+    "popularity": 605,
+    "description": "Interwoven stories of a coastal town where boatmakers and poets share a harbor.",
+    "cover": "/assets/covers/patterns-tides.jpg"
+  },
+  {
+    "id": "12",
+    "title": "Data-Driven Design",
+    "author": "Jonas Müller",
+    "genre": "Design",
+    "price": 28.99,
+    "rating": 4.6,
+    "popularity": 1125,
+    "description": "Bridging product sense and analytics to craft lovable experiences.",
+    "cover": "/assets/covers/data-driven-design.jpg"
+  }
+]
