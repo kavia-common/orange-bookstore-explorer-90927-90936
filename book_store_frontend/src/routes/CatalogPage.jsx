@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useBooks from '../hooks/useBooks';
 import SidebarFilters from '../components/SidebarFilters.jsx';
 import SortBar from '../components/SortBar.jsx';
+import BookCard from '../components/BookCard.jsx';
+import { useCart } from '../context/CartContext.jsx';
 
 /**
  * CatalogPage - uses useBooks to show filtered/sorted results.
  * Keeps a stable heading "Book Catalog" used by tests.
  * Implements responsive two-column layout with sticky sidebar (desktop) and drawer (mobile).
+ * Provides an aria-live region to announce cart updates.
  */
 
 // PUBLIC_INTERFACE
@@ -21,6 +23,20 @@ export default function CatalogPage() {
   const openFilters = () => setFiltersOpen(true);
   const closeFilters = () => setFiltersOpen(false);
 
+  // Announcements for a11y (cart updates, etc.)
+  const liveRef = useRef(null);
+  const { totals } = useCart();
+
+  const announce = (msg) => {
+    if (!liveRef.current) return;
+    // Clear first to ensure assistive tech re-announces same text if repeated quickly
+    liveRef.current.textContent = '';
+    // Use setTimeout to create a DOM change detectable by screen readers
+    setTimeout(() => {
+      if (liveRef.current) liveRef.current.textContent = msg;
+    }, 30);
+  };
+
   const sidebarContent = useMemo(
     () => <SidebarFilters allGenres={allGenres} allAuthors={allAuthors} onClose={closeFilters} />,
     [allGenres, allAuthors] // closeFilters stable enough for our case; not including to avoid re-mount loop
@@ -29,6 +45,9 @@ export default function CatalogPage() {
   return (
     <section aria-label="Catalog section">
       <h1>Book Catalog</h1>
+
+      {/* aria-live region for announcements (cart adds, etc.) */}
+      <div aria-live="polite" aria-atomic="true" className="visually-hidden" ref={liveRef} />
 
       <div className="spacer" />
 
@@ -68,7 +87,12 @@ export default function CatalogPage() {
         <div role="main" aria-label="Main content" style={{ display: 'grid', gap: '1rem' }}>
           {loading && <p>Loading books…</p>}
           {error && <p style={{ color: 'var(--error)' }}>Failed to load books.</p>}
-          {!loading && !error && <BookGrid books={books} />}
+          {!loading && !error && (
+            <BookGrid
+              books={books}
+              onAddedToCart={(b) => announce(`${b.title} added to cart. Cart now has ${totals.count + 0} items.`)}
+            />
+          )}
         </div>
       </div>
 
@@ -113,25 +137,7 @@ export default function CatalogPage() {
   );
 }
 
-/** Simple placeholder BookCard component for grid items. */
-function BookCard({ book }) {
-  return (
-    <article className="surface" style={{ padding: '.75rem', borderRadius: '12px', display: 'grid', gap: '.5rem' }}>
-      <div style={{ aspectRatio: '3 / 4', background: 'linear-gradient(135deg, rgba(37,99,235,.12), rgba(15,23,42,.04))', borderRadius: '10px' }} aria-hidden="true" />
-      <header>
-        <h3 style={{ fontSize: '1rem', margin: 0 }}>{book.title}</h3>
-        <div style={{ color: 'rgba(17,24,39,0.7)' }}>{book.author}</div>
-      </header>
-      <div style={{ fontSize: '.9rem', color: 'rgba(17,24,39,0.7)' }}>{book.genre}</div>
-      <div style={{ fontWeight: 700 }}>${Number(book.price ?? 0).toFixed(2)}</div>
-      <div>
-        <Link to={`/book/${book.id}`} className="link">View</Link>
-      </div>
-    </article>
-  );
-}
-
-function BookGrid({ books }) {
+function BookGrid({ books, onAddedToCart }) {
   if (!books?.length) {
     return <p>No books match your filters.</p>;
   }
@@ -149,7 +155,7 @@ function BookGrid({ books }) {
     >
       {books.map((b) => (
         <li key={b.id}>
-          <BookCard book={b} />
+          <BookCard book={b} onAddedToCart={onAddedToCart} />
         </li>
       ))}
     </ul>
@@ -158,8 +164,13 @@ function BookGrid({ books }) {
 
 // Helpers for responsive detection without external libs
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' && window.matchMedia) ? window.matchMedia('(max-width: 900px)').matches : false);
-  useEffect(() => {
+  const [isMobile, setIsMobile] = React.useState(() =>
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(max-width: 900px)').matches
+      : false
+  );
+
+  React.useEffect(() => {
     if (!(typeof window !== 'undefined' && window.matchMedia)) return;
     const mq = window.matchMedia('(max-width: 900px)');
     const listener = (e) => setIsMobile(e.matches);
@@ -170,5 +181,6 @@ function useIsMobile() {
       else if (mq.removeListener) mq.removeListener(listener);
     };
   }, []);
+
   return isMobile;
 }
