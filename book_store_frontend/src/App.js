@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import './styles/theme.css';
@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import CatalogPage from './routes/CatalogPage';
 import CartPage from './routes/CartPage';
+import CartModal from './components/CartModal.jsx';
+import { useCart } from './context/CartContext.jsx';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -18,10 +20,13 @@ function App() {
    */
   const [theme, setTheme] = useState('light');
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartCount] = useState(0); // Placeholder; can be replaced with useCart().totals.count
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { totals } = useCart();
+
+  // App-level aria-live for general announcements if needed
+  const appLiveRef = useRef(null);
 
   // Apply theme attribute
   useEffect(() => {
@@ -44,11 +49,14 @@ function App() {
 
   return (
     <div className="page">
+      {/* Global live region (polite) */}
+      <div ref={appLiveRef} aria-live="polite" aria-atomic="true" className="visually-hidden" />
+
       <Header
         onToggleTheme={toggleTheme}
         theme={theme}
         onOpenCart={openCart}
-        cartCount={cartCount}
+        cartCount={totals?.count || 0}
       />
 
       <main className="main">
@@ -91,34 +99,14 @@ function App() {
 
       <Footer />
 
-      {isCartOpen && (
-        <>
-          <button
-            className="cart-backdrop"
-            aria-label="Close cart"
-            onClick={closeCart}
-          />
-          <aside className="cart-modal" role="dialog" aria-modal="true" aria-label="Cart Quick View">
-            <header>
-              <strong>Cart</strong>
-              <button className="btn" onClick={closeCart} aria-label="Close cart">
-                Close
-              </button>
-            </header>
-            <div className="content">
-              <p>Your cart is currently empty.</p>
-            </div>
-            <footer>
-              <button className="btn btn-primary" onClick={() => navigate('/cart')}>
-                Go to Cart
-              </button>
-              <button className="btn" onClick={closeCart}>
-                Continue Shopping
-              </button>
-            </footer>
-          </aside>
-        </>
-      )}
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={closeCart}
+        onGoToCart={() => {
+          closeCart();
+          navigate('/cart');
+        }}
+      />
     </div>
   );
 }

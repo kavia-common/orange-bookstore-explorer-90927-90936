@@ -27,3 +27,8 @@
 .spacer {
   height: 1rem;
 }
+
+/* Minor enhancements for clickable backdrop cursor */
+.cart-backdrop {
+  cursor: pointer;
+}
